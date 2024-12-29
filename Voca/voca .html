@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하루 10개의 영단어 공부</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgb(216, 132, 132);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 30px;
+        }
+
+        .word-list {
+            list-style: none;
+        }
+
+        .word-item {
+            background-color: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+            position: relative;
+            padding-right: 100px;
+        }
+
+        .word-item:hover {
+            transform: translateX(10px);
+            background-color: #e8f0fe;
+        }
+
+        .word-english {
+            font-weight: bold;
+            color: #1a73e8;
+            font-size: 1.2em;
+        }
+
+        .word-korean {
+            color: #5f6368;
+        }
+
+        .date {
+            text-align: right;
+            color: #80868b;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        .memory-status {
+            position: absolute;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-memorized {
+            padding: 5px 10px;
+            background-color: #34a853;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .btn-memorized:hover {
+            background-color: #2d8f47;
+        }
+
+        .not-memorized {
+            background-color: #ffcdd2;
+        }
+
+        .memorized {
+            background-color: #e8f5e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>오늘의 영단어 10개</h1>
+        <ul class="word-list">
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/perseverance.mp3">
+                <div>
+                    <span class="word-english">Perseverance</span>
+                    <span class="word-korean">인내, 끈기</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/magnificent.mp3">
+                <div>
+                    <span class="word-english">Magnificent</span>
+                    <span class="word-korean">웅장한, 멋진</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/serendipity.mp3">
+                <div>
+                    <span class="word-english">Serendipity</span>
+                    <span class="word-korean">우연한 발견</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/eloquent.mp3">
+                <div>
+                    <span class="word-english">Eloquent</span>
+                    <span class="word-korean">웅변적인, 설득력 있는</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/resilient.mp3">
+                <div>
+                    <span class="word-english">Resilient</span>
+                    <span class="word-korean">탄력있는, 회복력 있는</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/ephemeral.mp3">
+                <div>
+                    <span class="word-english">Ephemeral</span>
+                    <span class="word-korean">덧없는, 일시적인</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/profound.mp3">
+                <div>
+                    <span class="word-english">Profound</span>
+                    <span class="word-korean">심오한, 깊이 있는</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/benevolent.mp3">
+                <div>
+                    <span class="word-english">Benevolent</span>
+                    <span class="word-korean">자비로운, 인자한</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/ethereal.mp3">
+                <div>
+                    <span class="word-english">Ethereal</span>
+                    <span class="word-korean">천상의, 섬세한</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+            <li class="word-item" data-audio="https://api.dictionaryapi.dev/media/pronunciations/en/quintessential.mp3">
+                <div>
+                    <span class="word-english">Quintessential</span>
+                    <span class="word-korean">전형적인, 정수의</span>
+                </div>
+                <div class="memory-status">
+                    <button class="btn-memorized" onclick="toggleMemory(this)">암기완료</button>
+                </div>
+            </li>
+        </ul>
+        <div class="date"></div>
+    </div>
+    <script>
+        // 단어 발음 재생 함수
+        function speakWord(word) {
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;  // 발음 속도 (0.1 ~ 10)
+            utterance.pitch = 1;   // 음높이 (0 ~ 2)
+            speechSynthesis.speak(utterance);
+        }
+
+        // 단어 클릭 이벤트
+        document.querySelectorAll('.word-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-memorized')) return;
+                
+                const word = this.querySelector('.word-english').textContent;
+                speakWord(word);
+            });
+        });
+
+        function toggleMemory(btn) {
+            const wordItem = btn.closest('.word-item');
+            const word = wordItem.querySelector('.word-english').textContent;
+            
+            if (btn.textContent === '암기완료') {
+                btn.textContent = '내일 다시';
+                wordItem.classList.add('memorized');
+                wordItem.classList.remove('not-memorized');
+                saveMemoryStatus(word, true);
+            } else {
+                btn.textContent = '암기완료';
+                wordItem.classList.remove('memorized');
+                wordItem.classList.add('not-memorized');
+                saveMemoryStatus(word, false);
+            }
+        }
+
+        function saveMemoryStatus(word, status) {
+            const date = new Date().toLocaleDateString();
+            let memoryData = JSON.parse(localStorage.getItem('wordMemory')) || {};
+            
+            if (!memoryData[date]) {
+                memoryData[date] = {};
+            }
+            memoryData[date][word] = status;
+            localStorage.setItem('wordMemory', JSON.stringify(memoryData));
+        }
+
+        const wordAudioMap = {
+            'Perseverance': 'https://api.dictionaryapi.dev/media/pronunciations/en/perseverance.mp3',
+            'Magnificent': 'https://api.dictionaryapi.dev/media/pronunciations/en/magnificent.mp3',
+            'Serendipity': 'https://api.dictionaryapi.dev/media/pronunciations/en/serendipity.mp3',
+            'Eloquent': 'https://api.dictionaryapi.dev/media/pronunciations/en/eloquent.mp3',
+            'Resilient': 'https://api.dictionaryapi.dev/media/pronunciations/en/resilient.mp3',
+            'Ephemeral': 'https://api.dictionaryapi.dev/media/pronunciations/en/ephemeral.mp3',
+            'Profound': 'https://api.dictionaryapi.dev/media/pronunciations/en/profound.mp3',
+            'Benevolent': 'https://api.dictionaryapi.dev/media/pronunciations/en/benevolent.mp3',
+            'Ethereal': 'https://api.dictionaryapi.dev/media/pronunciations/en/ethereal.mp3',
+            'Quintessential': 'https://api.dictionaryapi.dev/media/pronunciations/en/quintessential.mp3'
+        };
+
+        // 오늘 날짜 표시 함수
+        function setTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1;
+            const day = today.getDate();
+            const dateElement = document.querySelector('.date');
+            dateElement.textContent = `${year}년 ${month}월 ${day}일`;
+        }
+
+        // 페이지 로드 시 날짜 설정
+        window.addEventListener('load', () => {
+            setTodayDate();
+            document.querySelectorAll('.word-item').forEach(item => {
+                const word = item.querySelector('.word-english').textContent;
+                if (wordAudioMap[word]) {
+                    item.dataset.audio = wordAudioMap[word];
+                }
+            });
+
+            const date = new Date().toLocaleDateString();
+            const memoryData = JSON.parse(localStorage.getItem('wordMemory')) || {};
+            const todayData = memoryData[date] || {};
+
+            document.querySelectorAll('.word-item').forEach(item => {
+                const word = item.querySelector('.word-english').textContent;
+                const btn = item.querySelector('.btn-memorized');
+                
+                if (todayData[word] === true) {
+                    btn.textContent = '미암기';
+                    item.classList.add('memorized');
+                } else if (todayData[word] === false) {
+                    btn.textContent = '암기완료';
+                    item.classList.add('not-memorized');
+                }
+            });
+
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayData = memoryData[yesterday.toLocaleDateString()] || {};
+            
+            for (const [word, status] of Object.entries(yesterdayData)) {
+                if (!status && !todayData[word]) {
+                    const wordItem = Array.from(document.querySelectorAll('.word-item'))
+                        .find(item => item.querySelector('.word-english').textContent === word);
+                    if (wordItem) {
+                        wordItem.classList.add('not-memorized');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
